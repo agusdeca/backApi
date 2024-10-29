@@ -1,13 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+const fetch = require('node-fetch'); // Asegúrate de instalarlo con `npm install node-fetch`
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json()); 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 
 app.get("/", (req, res) => {
     const htmlResponse = `
@@ -16,12 +14,12 @@ app.get("/", (req, res) => {
           <title>NodeJs y Express en Vercel</title>
         </head>
         <body>
-          <h1>Soy un proyecto Back end en vercel</h1>
+          <h1>Soy un proyecto Back end en Vercel</h1>
         </body>
       </html>
     `;
     res.send(htmlResponse);
-  });
+});
 
 app.get('/api/games', async (req, res) => {
     try {
@@ -38,19 +36,18 @@ app.get('/api/games', async (req, res) => {
 app.post('/getpassword', (req, res) => {
     const { username } = req.body;
 
-    fs.readFile('./data/users.json', 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: 'Error al leer el archivo' });
-        }
-        const users = JSON.parse(data);
-        const user = users.find(u => u.username === username);
+    const users = [
+        { username: "admin", password: "password123" }
+    ];
+    const user = users.find(u => u.username === username);
 
-        if (user) {
-            res.json({ password: user.password });
-        } else {
-            res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-    });
+    if (user) {
+        res.json({ password: user.password });
+    } else {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+    }
 });
 
-
+app.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
+});
