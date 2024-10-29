@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch'); // Asegúrate de instalarlo con npm install node-fetch
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -10,17 +10,7 @@ app.get("/", (req, res) => {
     res.send("hola");
 });
 
-app.get('/api/games', async (req, res) => {
-    try {
-        const response = await fetch('https://www.freetogame.com/api/games?platform=pc');
-        const data = await response.json();
-        const limitedData = data.slice(0, 20);
-        res.json(limitedData);
-    } catch (error) {
-        console.error('Error al obtener los juegos:', error);
-        res.status(500).json({ message: 'Error en el servidor' });
-    }
-});
+
 
 app.post('/getpassword', (req, res) => {
     const { username } = req.body;
@@ -37,5 +27,6 @@ app.post('/getpassword', (req, res) => {
     }
 });
 
-// Exportar la función para Vercel
-module.exports = (req, res) => app(req, res);
+app.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
+});
