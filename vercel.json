@@ -7,8 +7,12 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/",
       "dest": "/"
+    },
+    {
+      "src": "/getpassword",
+      "dest": "/getpassword"
     }
   ]
 }
