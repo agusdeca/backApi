@@ -8,17 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    const htmlResponse = `
-      <html>
-        <head>
-          <title>NodeJs y Express en Vercel</title>
-        </head>
-        <body>
-          <h1>Soy un proyecto Back end en Vercel</h1>
-        </body>
-      </html>
-    `;
-    res.send(htmlResponse);
+    res.send("hola");
 });
 
 app.get('/api/games', async (req, res) => {
