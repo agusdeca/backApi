@@ -53,7 +53,4 @@ app.post('/getpassword', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`port runing in http://localhost:${port}`);
-}); 
 
