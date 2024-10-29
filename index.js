@@ -3,11 +3,25 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json()); 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get("/", (req, res) => {
+    const htmlResponse = `
+      <html>
+        <head>
+          <title>NodeJs y Express en Vercel</title>
+        </head>
+        <body>
+          <h1>Soy un proyecto Back end en vercel</h1>
+        </body>
+      </html>
+    `;
+    res.send(htmlResponse);
+  });
 
 app.get('/api/games', async (req, res) => {
     try {
